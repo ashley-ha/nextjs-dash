@@ -7,7 +7,7 @@ interface Breadcrumb {
   href: string;
   active?: boolean;
 }
-
+// update breadcrumb
 export default function Breadcrumbs({
   breadcrumbs,
 }: {

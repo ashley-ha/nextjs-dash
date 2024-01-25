@@ -1,1 +1,4 @@
-NextJS project
+Building a dashboard website with Nextjs
+________________________________________________________________________________________________
+
+Author: @Ashley Ha

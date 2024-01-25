@@ -1,0 +1,74 @@
+
+STATIC RENDERING 
+
+data fetching and rendering happens on the server at build time (when you deploy) or during revalidation.
+the result can then be distributed and cached in a content delivery network (CDN).
+
+cached data fetching <--> cache <--> data (data is fetched and cached. cached data is re-used on each 
+request)
+uncached data fetching <--> data (data is fetched on each request)
+
+benefits:
+- faster websites: prerendered content can be cached and globally distributed. 
+- reduced server load: bc when content is cached, your server doesnt have to dynamically generate content
+for each user request
+- SEO: prerendered content is easier for search engine crawlers to index, as the content is already 
+available when the page loads. this can lead to improved search engine rankings
+
+useability:
+- useful for UI with no data or data that is shared across users, such as a static blog post or a product 
+page.
+- might not be a good fit for a dashboard that has personalized data that is regularly updated.
+- When ur data updates, u want to show latest changes in ur dashboard. Static Rendering is not a good fit 
+for this
+- opposite of static rendering is dynamic rendering.
+__________________________________________________________________________________________________________
+
+DYNAMIC RENDERING
+
+content is rendered on the server for each user at request time (when user visits page)
+
+benefits:
+- real time data: DR allows app to display real time or freq updated data. ideal for apps where data 
+changes freq.
+- user specific content: easier to serve personalized content like dashboards or user profiles and update 
+beta on 
+user interaction.
+request time info: DR allows u to access info that can only be known at request time (cookies or URL 
+search params)
+
+___________________________________________________________________________________________________________
+
+Making your website dynamic: use next.js api called unstable_noStore inside your server components or data
+fetching functions to opt out of static rendering.
+
+
+___________________________________________________________________________________________________________
+
+STREAMING
+
+streaming is a data transfer technique that allows you to break down a route into smaller "chunks" and 
+progressively stream them from the server to the client as they become ready.
+
+by streaming, you can prevent slow data requests from blocking your whole page. allows the user to see and
+interact with parts of the page without waiting for all the data.
+
+two ways to implement streaming in next.js:
+- at the page level, with the loading.tsx file
+- for specific components, with <Suspense> 
+
+stream specific components instead of entire page:
+- react suspense allows to defer rendering parts of your app until some condition is met (e.g. data loaded)
+you can wrap dynamic components in suspense then pass it a fallback component to show while a dyn comp loads
+
+e.g. with fetchRevenue() slowing down loading the ui we can use react suspense to stream only this 
+    component and immediately show rest of pages ui
+
+various ways to stream:
+- stream the whole page like we did with loading.tsx... but that may lead to a longer loading time if one
+    of the components has a slow data fetch.
+- stream every component individually... but that may lead to UI popping into the screen as it becomes
+    ready.
+- create a staggered effect by streaming page sections. But you'll need to create wrapper components.
+___________________________________________________________________________________________________________
+
